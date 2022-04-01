@@ -16,11 +16,6 @@ public final class ExtraStorageAddon extends JavaPlugin implements Listener {
         } else {
             getServer().getPluginManager().disablePlugin(this);
         }
-        if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
-            getLogger().log(Level.INFO, "Successfully hooked with WorldGuard v" + Objects.requireNonNull(getServer().getPluginManager().getPlugin("WorldGuard")).getDescription().getVersion());
-        } else {
-            getServer().getPluginManager().disablePlugin(this);
-        }
     }
 
     @Override

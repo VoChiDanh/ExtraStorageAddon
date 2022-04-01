@@ -2,6 +2,6 @@ name: ExtraStorageAddon
 version: '${project.version}'
 main: net.danh.extrastorageaddon.ExtraStorageAddon
 api-version: 1.13
-depend: [ ExtraStorage, WorldGuard ]
+depend: [ ExtraStorage ]
 authors: [ VoChiDanh ]
 description: ${project.description}
