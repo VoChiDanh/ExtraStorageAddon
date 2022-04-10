@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
+import java.util.List;
 import java.util.Random;
 
 public class BlockBreak implements Listener {
@@ -20,9 +21,12 @@ public class BlockBreak implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onStoring(ItemStoringEvent e) {
         Player p = e.getUser().getPlayer();
-        if (p.getItemInHand().containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
-            int amount = getRandomInt(p.getItemInHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS), p.getItemInHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) * 5);
-            StorageAPI.getInstance().getUser(e.getUser().getUUID()).getStorage().addMaterial(e.getItem(), amount);
+        List<String> w = Files.getconfigfile().getStringList("disable-worlds");
+        if (!(w.contains(p.getWorld().getName()))) {
+            if (p.getItemInHand().containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
+                int amount = getRandomInt(p.getItemInHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS), p.getItemInHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) * 2);
+                StorageAPI.getInstance().getUser(e.getUser().getUUID()).getStorage().addMaterial(e.getItem(), amount);
+            }
         }
     }
 }
