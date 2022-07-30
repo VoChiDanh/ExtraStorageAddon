@@ -25,5 +25,5 @@ jobs:
             ${{ github.event.head_commit.message }}
             
             Developer: [`${{ github.actor }}`](https://github.com/${{ github.actor }})
-            SpigotMC (ExtraStorage): [`10051`](https://www.spigotmc.org/resources/90379/)
+            SpigotMC (ExtraStorage): [`90379`](https://www.spigotmc.org/resources/90379/)
 
