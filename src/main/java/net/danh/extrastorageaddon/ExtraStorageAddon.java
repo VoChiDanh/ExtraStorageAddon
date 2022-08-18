@@ -16,8 +16,8 @@ import static net.danh.extrastorageaddon.Manager.EManager.register;
 
 public final class ExtraStorageAddon extends JavaPlugin implements Listener {
 
-    public final static Enchantment EXPLOSIVE = new EnchantWrapper("explosive", "Explosive", 100, EnchantmentTarget.TOOL);
-    public final static Enchantment SMELT = new EnchantWrapper("smelt", "Smelt", 100, EnchantmentTarget.TOOL);
+    public final static Enchantment EXPLOSIVE = new EnchantWrapper(200, "Explosive", 100, EnchantmentTarget.TOOL);
+    public final static Enchantment SMELT = new EnchantWrapper(201, "Smelt", 100, EnchantmentTarget.TOOL);
 
     private static ExtraStorageAddon instance;
 
