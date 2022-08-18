@@ -17,12 +17,11 @@ import java.util.List;
 import java.util.Random;
 
 public class BlockBreak implements Listener {
-
     @EventHandler
     public void onStorage(ItemStoringEvent e) {
         if (EManager.getItem(e.getUser().getPlayer(), e.getItem()) != e.getItem()) {
-            StorageAPI.getInstance().getUser(e.getUser().getUUID()).getStorage().addMaterial(EManager.getItem(e.getUser().getPlayer(), e.getItem()), 1);
-            e.setCancelled(true);
+            StorageAPI.getInstance().getUser(e.getUser().getUUID()).getStorage().addMaterial(EManager.getItem(e.getUser().getPlayer(), e.getItem()), e.getItem().getAmount());
+            StorageAPI.getInstance().getUser(e.getUser().getUUID()).getStorage().subtractMaterial(e.getItem(), e.getItem().getAmount());
         }
     }
 
