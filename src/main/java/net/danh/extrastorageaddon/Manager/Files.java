@@ -1,5 +1,6 @@
-package net.danh.extrastorageaddon;
+package net.danh.extrastorageaddon.Manager;
 
+import net.danh.extrastorageaddon.ExtraStorageAddon;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

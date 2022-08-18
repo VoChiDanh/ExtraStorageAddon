@@ -1,2 +1,39 @@
 disable-worlds:
   - plots2
+enchants:
+  smelt:
+    custom_lore: false
+    add: "&fEnchant Smelt #level# added to tool"
+    name: "Smelt #level#"
+    blocks:
+      IRON_ORE: IRON_INGOT
+      GOLD_ORE: GOLD_INGOT
+  explosive:
+    custom_lore: false
+    add: "&fEnchant Explosive #level# added to tool"
+    name: "Explosive #level#"
+    blocks:
+      - STONE
+      - COBBLESTONE
+      - COAL_ORE
+      - COAL_BLOCK
+      - IRON_ORE
+      - IRON_BLOCK
+      - GOLD_ORE
+      - GOLD_BLOCK
+      - DIAMOND_ORE
+      - DIAMOND_BLOCK
+      - EMERALD_ORE
+      - EMERALD_BLOCK
+    radius:
+      1: 1
+      2: 2
+      3: 3
+      4: 4
+      5: 5
+    chance:
+      1: 10
+      2: 20
+      3: 30
+      4: 40
+      5: 50
