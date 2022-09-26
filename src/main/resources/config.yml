@@ -1,6 +1,7 @@
 disable-worlds:
   - plots2
 enchants:
+  fortune: "#level# * 5"
   smelt:
     custom_lore: false
     add: "&fEnchant Smelt #level# added to tool"

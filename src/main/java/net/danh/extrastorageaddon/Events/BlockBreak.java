@@ -2,6 +2,7 @@ package net.danh.extrastorageaddon.Events;
 
 import com.hyronic.exstorage.api.StorageAPI;
 import com.hyronic.exstorage.api.events.ItemStoringEvent;
+import net.danh.dcore.Calculator.Calculator;
 import net.danh.extrastorageaddon.ExtraStorageAddon;
 import net.danh.extrastorageaddon.Manager.EManager;
 import net.danh.extrastorageaddon.Manager.ExplosiveBlock;
@@ -33,7 +34,8 @@ public class BlockBreak implements Listener {
             if (p.getInventory().getItemInMainHand().containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
                 for (ItemStack itemStack : e.getBlock().getDrops()) {
                     if (StorageAPI.getInstance().getUser(p.getUniqueId()).getStorage().canStore(EManager.getItem(p, itemStack), false)) {
-                        StorageAPI.getInstance().getUser(p.getUniqueId()).getStorage().addMaterial(EManager.getItem(p, itemStack), p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) * 5);
+                        StorageAPI.getInstance().getUser(p.getUniqueId()).getStorage().addMaterial(EManager.getItem(p, itemStack), (int) Double.parseDouble(Calculator.calculator(Files.getconfigfile().getString("enchants.fortune", "#level# * 5")
+                                .replace("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS))), 0)));
                     }
                 }
             }
