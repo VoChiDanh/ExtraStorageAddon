@@ -51,7 +51,6 @@ public class CMD extends CMDBase {
                                 ItemMeta meta = p.getInventory().getItemInMainHand().getItemMeta();
                                 List<String> item_lore = meta.getLore();
                                 for (int i = 0; i <= item_lore.size(); i++) {
-                                    System.out.println(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.EXPLOSIVE));
                                     if (item_lore.contains(ChatColor.GRAY + Files.getconfigfile().getString("enchants.explosive.name").replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.EXPLOSIVE))))) {
                                         if (item_lore.get(i).contains(ChatColor.GRAY + Files.getconfigfile().getString("enchants.explosive.name").replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.EXPLOSIVE))))) {
                                             item_lore.set(i, ChatColor.GRAY + Files.getconfigfile().getString("enchants.explosive.name").replaceAll("#level#", args[2]));
@@ -89,7 +88,6 @@ public class CMD extends CMDBase {
                                 ItemMeta meta = p.getInventory().getItemInMainHand().getItemMeta();
                                 List<String> item_lore = meta.getLore();
                                 for (int i = 0; i <= item_lore.size(); i++) {
-                                    System.out.println(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.SMELT));
                                     if (item_lore.contains(ChatColor.GRAY + Files.getconfigfile().getString("enchants.smelt.name").replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.SMELT))))) {
                                         if (item_lore.get(i).contains(ChatColor.GRAY + Files.getconfigfile().getString("enchants.smelt.name").replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.SMELT))))) {
                                             item_lore.set(i, ChatColor.GRAY + Files.getconfigfile().getString("enchants.smelt.name").replaceAll("#level#", args[2]));

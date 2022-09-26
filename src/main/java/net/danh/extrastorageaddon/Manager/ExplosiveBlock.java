@@ -30,8 +30,10 @@ public class ExplosiveBlock {
                 for (ItemStack itemStack : location.getBlock().getDrops()) {
                     if (Files.getconfigfile().getStringList("enchants.explosive.blocks").contains(location.getBlock().getType().name())) {
                         if (storage.canStore(EManager.getItem(e.getPlayer(), itemStack), false)) {
-                            StorageAPI.getInstance().getUser(e.getPlayer().getUniqueId()).getStorage().addMaterial(EManager.getItem(e.getPlayer(), itemStack), 1);
-                            location.getBlock().setType(Material.AIR);
+                            if (EManager.checkFlags(e.getPlayer(), location.getBlock())) {
+                                StorageAPI.getInstance().getUser(e.getPlayer().getUniqueId()).getStorage().addMaterial(EManager.getItem(e.getPlayer(), itemStack), 1);
+                                location.getBlock().setType(Material.AIR);
+                            }
                         }
                     }
                 }
