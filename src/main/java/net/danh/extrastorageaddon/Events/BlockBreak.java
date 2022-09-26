@@ -33,7 +33,7 @@ public class BlockBreak implements Listener {
             if (p.getInventory().getItemInMainHand().containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
                 for (ItemStack itemStack : e.getBlock().getDrops()) {
                     if (StorageAPI.getInstance().getUser(p.getUniqueId()).getStorage().canStore(EManager.getItem(p, itemStack), false)) {
-                        StorageAPI.getInstance().getUser(p.getUniqueId()).getStorage().addMaterial(EManager.getItem(p, itemStack), new Random().nextInt(p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)) * 2);
+                        StorageAPI.getInstance().getUser(p.getUniqueId()).getStorage().addMaterial(EManager.getItem(p, itemStack), p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) * 5);
                     }
                 }
             }
