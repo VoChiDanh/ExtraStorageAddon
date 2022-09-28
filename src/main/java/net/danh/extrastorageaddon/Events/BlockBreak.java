@@ -2,6 +2,7 @@ package net.danh.extrastorageaddon.Events;
 
 import com.hyronic.exstorage.api.StorageAPI;
 import com.hyronic.exstorage.api.events.ItemStoringEvent;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.danh.dcore.Calculator.Calculator;
 import net.danh.extrastorageaddon.ExtraStorageAddon;
 import net.danh.extrastorageaddon.Manager.ExplosiveBlock;
@@ -34,11 +35,13 @@ public class BlockBreak implements Listener {
             if (p.getInventory().getItemInMainHand().containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
                 for (ItemStack itemStack : e.getBlock().getDrops()) {
                     if (StorageAPI.getInstance().getUser(p.getUniqueId()).getStorage().canStore(ExtraStorageAddon.getEManager().getItem(p, itemStack), false)) {
-                        StorageAPI.getInstance().getUser(p.getUniqueId()).getStorage().addMaterial(ExtraStorageAddon.getEManager().getItem(p, itemStack), (int) Double.parseDouble(Calculator.calculator(Objects.requireNonNull(Files.getconfigfile().getString("enchants.fortune", "#level# * 5")).replace("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS))), 0)));
+                        String fortune = Objects.requireNonNull(Files.getconfigfile().getString("enchants.fortune", "#level# * 5")).replace("#level#", String.valueOf(e.getPlayer().getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)));
+                        fortune = PlaceholderAPI.setPlaceholders(e.getPlayer(), fortune);
+                        int amount = (int) Double.parseDouble(Calculator.calculator(fortune, 0));
+                        StorageAPI.getInstance().getUser(p.getUniqueId()).getStorage().addMaterial(ExtraStorageAddon.getEManager().getItem(p, itemStack), amount);
                     }
                 }
-            }
-            if (p.getInventory().getItemInMainHand().containsEnchantment(ExtraStorageAddon.EXPLOSIVE)) {
+            } if (p.getInventory().getItemInMainHand().containsEnchantment(ExtraStorageAddon.EXPLOSIVE)) {
                 if (new Random().nextInt(100) < Files.getconfigfile().getInt("enchants.explosive.chance." + p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.EXPLOSIVE))) {
                     new ExplosiveBlock().run(e, p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.EXPLOSIVE));
                 }
