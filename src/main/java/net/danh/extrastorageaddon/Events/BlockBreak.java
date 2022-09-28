@@ -14,6 +14,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class BlockBreak implements Listener {
@@ -33,7 +34,7 @@ public class BlockBreak implements Listener {
             if (p.getInventory().getItemInMainHand().containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
                 for (ItemStack itemStack : e.getBlock().getDrops()) {
                     if (StorageAPI.getInstance().getUser(p.getUniqueId()).getStorage().canStore(ExtraStorageAddon.getEManager().getItem(p, itemStack), false)) {
-                        StorageAPI.getInstance().getUser(p.getUniqueId()).getStorage().addMaterial(ExtraStorageAddon.getEManager().getItem(p, itemStack), (int) Double.parseDouble(Calculator.calculator(Files.getconfigfile().getString("enchants.fortune", "#level# * 5").replace("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS))), 0)));
+                        StorageAPI.getInstance().getUser(p.getUniqueId()).getStorage().addMaterial(ExtraStorageAddon.getEManager().getItem(p, itemStack), (int) Double.parseDouble(Calculator.calculator(Objects.requireNonNull(Files.getconfigfile().getString("enchants.fortune", "#level# * 5")).replace("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS))), 0)));
                     }
                 }
             }
