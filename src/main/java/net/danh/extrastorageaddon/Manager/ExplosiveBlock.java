@@ -34,21 +34,29 @@ public class ExplosiveBlock {
             for (Location location : locations) {
                 for (ItemStack itemStack : location.getBlock().getDrops()) {
                     if (Files.getconfigfile().getStringList("enchants.explosive.blocks").contains(location.getBlock().getType().name())) {
-                        if (user.getStorage().canStore(ExtraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), false)) {
+                        if (user.getStorage().canStore(ExtraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), true)) {
                             if (ExtraStorageAddon.getEManager().checkFlags(e.getPlayer(), location.getBlock())) {
                                 String fortune = Objects.requireNonNull(Files.getconfigfile().getString("enchants.fortune", "#level# * 5")).replace("#level#", String.valueOf(e.getPlayer().getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)));
                                 fortune = PlaceholderAPI.setPlaceholders(e.getPlayer(), fortune);
                                 if (e.getPlayer().getInventory().getItemInMainHand().containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
                                     int amount = (int) Double.parseDouble(Calculator.calculator(fortune, 0));
-                                    if (user.getStorage().getMaterial(itemStack) + amount <= user.getStorage().getUnused(itemStack)) {
+                                    /*      if (user.getStorage().getFreeSpace() - (long) (user.getStorage().getMaterial(itemStack) + amount) >= 0) {*/
+                                    if (user.getStorage().isUnused(ExtraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack))) {
+                                        user.getStorage().addUnused(ExtraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), amount);
+                                    } else {
                                         user.getStorage().addMaterial(ExtraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), amount);
-                                        location.getBlock().setType(Material.AIR);
                                     }
+                                    location.getBlock().setType(Material.AIR);
+                                    /*}*/
                                 } else {
-                                    if (user.getStorage().getMaterial(itemStack) + 1 <= user.getStorage().getUnused(itemStack)) {
+                                    /*if (user.getStorage().getFreeSpace() - (long) (user.getStorage().getMaterial(itemStack) + 1) >= 0) {*/
+                                    if (user.getStorage().isUnused(ExtraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack))) {
+                                        user.getStorage().addUnused(ExtraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), 1);
+                                    } else {
                                         user.getStorage().addMaterial(ExtraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), 1);
-                                        location.getBlock().setType(Material.AIR);
                                     }
+                                    location.getBlock().setType(Material.AIR);
+                                    /*}*/
                                 }
                             }
                         }
