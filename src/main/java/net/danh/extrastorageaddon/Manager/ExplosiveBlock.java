@@ -41,14 +41,15 @@ public class ExplosiveBlock {
                                 if (e.getPlayer().getInventory().getItemInMainHand().containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
                                     int amount = (int) Double.parseDouble(Calculator.calculator(fortune, 0));
                                     if (user.getStorage().getMaterial(itemStack) + amount <= user.getStorage().getUnused(itemStack)) {
-                                        StorageAPI.getInstance().getUser(e.getPlayer().getUniqueId()).getStorage().addMaterial(ExtraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), amount);
+                                        user.getStorage().addMaterial(ExtraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), amount);
+                                        location.getBlock().setType(Material.AIR);
                                     }
                                 } else {
                                     if (user.getStorage().getMaterial(itemStack) + 1 <= user.getStorage().getUnused(itemStack)) {
                                         user.getStorage().addMaterial(ExtraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), 1);
+                                        location.getBlock().setType(Material.AIR);
                                     }
                                 }
-                                location.getBlock().setType(Material.AIR);
                             }
                         }
                     }
