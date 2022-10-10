@@ -19,8 +19,11 @@ import static net.danh.dcore.Utils.Player.sendPlayerMessage;
 
 public class CMD extends CMDBase {
 
-    public CMD(JavaPlugin core, String name) {
+    private final ExtraStorageAddon extraStorageAddon;
+
+    public CMD(ExtraStorageAddon core, String name) {
         super(core, name);
+        extraStorageAddon = core;
     }
 
     @Override
@@ -34,7 +37,7 @@ public class CMD extends CMDBase {
             }
             if (args.length == 3) {
                 if (args[0].equalsIgnoreCase("enchant")) {
-                    ExtraStorageAddon.getEManager().enchantItems(p, args[1], Integer.parseInt(args[2]));
+                    extraStorageAddon.getEManager().enchantItems(p, args[1], Integer.parseInt(args[2]));
                 }
             }
         }
@@ -52,7 +55,7 @@ public class CMD extends CMDBase {
             Player p = Bukkit.getPlayer(args[3]);
             if (p == null) return;
             if (args[0].equalsIgnoreCase("enchant")) {
-                ExtraStorageAddon.getEManager().enchantItems(p, args[1], Integer.parseInt(args[2]));
+                extraStorageAddon.getEManager().enchantItems(p, args[1], Integer.parseInt(args[2]));
             }
         }
     }

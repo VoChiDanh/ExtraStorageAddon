@@ -1,5 +1,7 @@
 package net.danh.extrastorageaddon;
 
+import com.hyronic.exstorage.api.StorageAPI;
+import com.hyronic.exstorage.data.user.Storage;
 import net.danh.extrastorageaddon.CMD.CMD;
 import net.danh.extrastorageaddon.Enchants.EnchantWrapper;
 import net.danh.extrastorageaddon.Events.BlockBreak;
@@ -15,17 +17,17 @@ import java.util.logging.Level;
 
 public final class ExtraStorageAddon extends JavaPlugin implements Listener {
 
-    public final static Enchantment EXPLOSIVE = new EnchantWrapper("explosive", "Explosive", 100, EnchantmentTarget.TOOL);
-    public final static Enchantment SMELT = new EnchantWrapper("smelt", "Smelt", 100, EnchantmentTarget.TOOL);
-
+    public final Enchantment EXPLOSIVE = new EnchantWrapper("explosive", "Explosive", 100, EnchantmentTarget.TOOL);
+    public final Enchantment SMELT = new EnchantWrapper("smelt", "Smelt", 100, EnchantmentTarget.TOOL);
     private static ExtraStorageAddon instance;
-    private static final EManager eManager = new EManager();
+    private final EManager eManager = new EManager(this);
+    private final StorageAPI storageAPI = StorageAPI.getInstance();
 
     public static ExtraStorageAddon getInstance() {
         return instance;
     }
 
-    public static EManager getEManager() {
+    public EManager getEManager() {
         return eManager;
     }
 
@@ -33,15 +35,14 @@ public final class ExtraStorageAddon extends JavaPlugin implements Listener {
     public void onEnable() {
         instance = this;
         if (getServer().getPluginManager().getPlugin("ExtraStorage") != null) {
-            getServer().getPluginManager().registerEvents(new BlockBreak(), this);
+            getServer().getPluginManager().registerEvents(new BlockBreak(this, storageAPI), this);
             getLogger().log(Level.INFO, "Successfully hooked with ExtraStorage v" + Objects.requireNonNull(getServer().getPluginManager().getPlugin("ExtraStorage")).getDescription().getVersion());
             eManager.register();
+            new CMD(this, "exaddon");
+            Files.createconfig();
         } else {
             getServer().getPluginManager().disablePlugin(this);
-            return;
         }
-        new CMD(this, "exaddon");
-        Files.createconfig();
     }
 
     @Override

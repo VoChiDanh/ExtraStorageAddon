@@ -4,6 +4,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.enchantments.EnchantmentWrapper;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class EnchantWrapper extends EnchantmentWrapper {
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return name;
     }
 
@@ -42,7 +43,7 @@ public class EnchantWrapper extends EnchantmentWrapper {
     }
 
     @Override
-    public EnchantmentTarget getItemTarget() {
+    public @NotNull EnchantmentTarget getItemTarget() {
         return target;
     }
 
@@ -57,13 +58,13 @@ public class EnchantWrapper extends EnchantmentWrapper {
     }
 
     @Override
-    public boolean conflictsWith(Enchantment other) {
+    public boolean conflictsWith(@NotNull Enchantment other) {
         if (this.conflict == null) return false;
         return this.conflict.contains(other);
     }
 
     @Override
-    public boolean canEnchantItem(ItemStack item) {
+    public boolean canEnchantItem(@NotNull ItemStack item) {
         return false;
     }
 }

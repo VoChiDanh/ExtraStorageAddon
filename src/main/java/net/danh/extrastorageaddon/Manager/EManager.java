@@ -25,37 +25,43 @@ import static net.danh.dcore.Utils.Player.sendPlayerMessage;
 
 public class EManager {
 
+    private final ExtraStorageAddon extraStorageAddon;
+
+    public EManager(ExtraStorageAddon extraStorageAddon) {
+        this.extraStorageAddon = extraStorageAddon;
+    }
+
     public void enchantItems(Player p, String enchant, int level) {
         if (enchant.equalsIgnoreCase("explosive")) {
             if (Files.getconfigfile().getBoolean("enchants.explosive.custom_lore")) {
-                p.getInventory().getItemInMainHand().addUnsafeEnchantment(ExtraStorageAddon.EXPLOSIVE, level);
-                sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(Files.getconfigfile().getString("enchants.explosive.add")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.EXPLOSIVE)))));
+                p.getInventory().getItemInMainHand().addUnsafeEnchantment(extraStorageAddon.EXPLOSIVE, level);
+                sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(Files.getconfigfile().getString("enchants.explosive.add")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(extraStorageAddon.EXPLOSIVE)))));
             } else {
                 if (Objects.requireNonNull(p.getInventory().getItemInMainHand().getItemMeta()).getLore() == null) {
                     ItemMeta meta = p.getInventory().getItemInMainHand().getItemMeta();
                     meta.setLore(Collections.singletonList(ChatColor.GRAY + Objects.requireNonNull(Files.getconfigfile().getString("enchants.explosive.name")).replaceAll("#level#", String.valueOf(level))));
                     p.getInventory().getItemInMainHand().setItemMeta(meta);
-                    p.getInventory().getItemInMainHand().addUnsafeEnchantment(ExtraStorageAddon.EXPLOSIVE, level);
-                    sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(Files.getconfigfile().getString("enchants.explosive.add")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.EXPLOSIVE)))));
+                    p.getInventory().getItemInMainHand().addUnsafeEnchantment(extraStorageAddon.EXPLOSIVE, level);
+                    sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(Files.getconfigfile().getString("enchants.explosive.add")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(extraStorageAddon.EXPLOSIVE)))));
                 } else {
                     ItemMeta meta = p.getInventory().getItemInMainHand().getItemMeta();
                     List<String> item_lore = meta.getLore();
                     for (int i = 0; i <= item_lore.size(); i++) {
-                        if (item_lore.contains(ChatColor.GRAY + Objects.requireNonNull(Files.getconfigfile().getString("enchants.explosive.name")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.EXPLOSIVE))))) {
-                            if (item_lore.get(i).contains(ChatColor.GRAY + Objects.requireNonNull(Files.getconfigfile().getString("enchants.explosive.name")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.EXPLOSIVE))))) {
+                        if (item_lore.contains(ChatColor.GRAY + Objects.requireNonNull(Files.getconfigfile().getString("enchants.explosive.name")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(extraStorageAddon.EXPLOSIVE))))) {
+                            if (item_lore.get(i).contains(ChatColor.GRAY + Objects.requireNonNull(Files.getconfigfile().getString("enchants.explosive.name")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(extraStorageAddon.EXPLOSIVE))))) {
                                 item_lore.set(i, ChatColor.GRAY + Objects.requireNonNull(Files.getconfigfile().getString("enchants.explosive.name")).replaceAll("#level#", String.valueOf(level)));
                                 meta.setLore(item_lore);
                                 p.getInventory().getItemInMainHand().setItemMeta(meta);
-                                p.getInventory().getItemInMainHand().addUnsafeEnchantment(ExtraStorageAddon.EXPLOSIVE, level);
-                                sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(Files.getconfigfile().getString("enchants.explosive.add")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.EXPLOSIVE)))));
+                                p.getInventory().getItemInMainHand().addUnsafeEnchantment(extraStorageAddon.EXPLOSIVE, level);
+                                sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(Files.getconfigfile().getString("enchants.explosive.add")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(extraStorageAddon.EXPLOSIVE)))));
                                 break;
                             }
                         } else {
                             item_lore.add(ChatColor.GRAY + Objects.requireNonNull(Files.getconfigfile().getString("enchants.explosive.name")).replaceAll("#level#", String.valueOf(level)));
                             meta.setLore(item_lore);
                             p.getInventory().getItemInMainHand().setItemMeta(meta);
-                            p.getInventory().getItemInMainHand().addUnsafeEnchantment(ExtraStorageAddon.EXPLOSIVE, level);
-                            sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(Files.getconfigfile().getString("enchants.explosive.add")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.EXPLOSIVE)))));
+                            p.getInventory().getItemInMainHand().addUnsafeEnchantment(extraStorageAddon.EXPLOSIVE, level);
+                            sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(Files.getconfigfile().getString("enchants.explosive.add")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(extraStorageAddon.EXPLOSIVE)))));
                             break;
                         }
                     }
@@ -64,34 +70,34 @@ public class EManager {
         }
         if (enchant.equalsIgnoreCase("smelt")) {
             if (Files.getconfigfile().getBoolean("enchants.smelt.custom_lore")) {
-                p.getInventory().getItemInMainHand().addUnsafeEnchantment(ExtraStorageAddon.SMELT, level);
-                sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(Files.getconfigfile().getString("enchants.smelt.add")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.SMELT)))));
+                p.getInventory().getItemInMainHand().addUnsafeEnchantment(extraStorageAddon.SMELT, level);
+                sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(Files.getconfigfile().getString("enchants.smelt.add")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(extraStorageAddon.SMELT)))));
             } else {
                 if (Objects.requireNonNull(p.getInventory().getItemInMainHand().getItemMeta()).getLore() == null) {
                     ItemMeta meta = p.getInventory().getItemInMainHand().getItemMeta();
                     meta.setLore(Collections.singletonList(ChatColor.GRAY + Objects.requireNonNull(Files.getconfigfile().getString("enchants.smelt.name")).replaceAll("#level#", String.valueOf(level))));
                     p.getInventory().getItemInMainHand().setItemMeta(meta);
-                    p.getInventory().getItemInMainHand().addUnsafeEnchantment(ExtraStorageAddon.SMELT, level);
-                    sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(Files.getconfigfile().getString("enchants.smelt.add")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.SMELT)))));
+                    p.getInventory().getItemInMainHand().addUnsafeEnchantment(extraStorageAddon.SMELT, level);
+                    sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(Files.getconfigfile().getString("enchants.smelt.add")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(extraStorageAddon.SMELT)))));
                 } else {
                     ItemMeta meta = p.getInventory().getItemInMainHand().getItemMeta();
                     List<String> item_lore = meta.getLore();
                     for (int i = 0; i <= item_lore.size(); i++) {
-                        if (item_lore.contains(ChatColor.GRAY + Objects.requireNonNull(Files.getconfigfile().getString("enchants.smelt.name")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.SMELT))))) {
-                            if (item_lore.get(i).contains(ChatColor.GRAY + Objects.requireNonNull(Files.getconfigfile().getString("enchants.smelt.name")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.SMELT))))) {
+                        if (item_lore.contains(ChatColor.GRAY + Objects.requireNonNull(Files.getconfigfile().getString("enchants.smelt.name")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(extraStorageAddon.SMELT))))) {
+                            if (item_lore.get(i).contains(ChatColor.GRAY + Objects.requireNonNull(Files.getconfigfile().getString("enchants.smelt.name")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(extraStorageAddon.SMELT))))) {
                                 item_lore.set(i, ChatColor.GRAY + Objects.requireNonNull(Files.getconfigfile().getString("enchants.smelt.name")).replaceAll("#level#", String.valueOf(level)));
                                 meta.setLore(item_lore);
                                 p.getInventory().getItemInMainHand().setItemMeta(meta);
-                                p.getInventory().getItemInMainHand().addUnsafeEnchantment(ExtraStorageAddon.SMELT, level);
-                                sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(Files.getconfigfile().getString("enchants.smelt.add")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.SMELT)))));
+                                p.getInventory().getItemInMainHand().addUnsafeEnchantment(extraStorageAddon.SMELT, level);
+                                sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(Files.getconfigfile().getString("enchants.smelt.add")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(extraStorageAddon.SMELT)))));
                                 break;
                             }
                         } else {
                             item_lore.add(ChatColor.GRAY + Objects.requireNonNull(Files.getconfigfile().getString("enchants.smelt.name")).replaceAll("#level#", String.valueOf(level)));
                             meta.setLore(item_lore);
                             p.getInventory().getItemInMainHand().setItemMeta(meta);
-                            p.getInventory().getItemInMainHand().addUnsafeEnchantment(ExtraStorageAddon.SMELT, level);
-                            sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(Files.getconfigfile().getString("enchants.smelt.add")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(ExtraStorageAddon.SMELT)))));
+                            p.getInventory().getItemInMainHand().addUnsafeEnchantment(extraStorageAddon.SMELT, level);
+                            sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(Files.getconfigfile().getString("enchants.smelt.add")).replaceAll("#level#", String.valueOf(p.getInventory().getItemInMainHand().getEnchantmentLevel(extraStorageAddon.SMELT)))));
                             break;
                         }
                     }
@@ -109,7 +115,7 @@ public class EManager {
     }
 
     public ItemStack getItem(Player p, ItemStack item) {
-        if (p.getInventory().getItemInMainHand().containsEnchantment(ExtraStorageAddon.SMELT)) {
+        if (p.getInventory().getItemInMainHand().containsEnchantment(extraStorageAddon.SMELT)) {
             if (Files.getconfigfile().getString("enchants.smelt.blocks." + item.getType().name()) != null) {
                 return new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(Files.getconfigfile().getString("enchants.smelt.blocks." + item.getType().name())))));
             } else {
@@ -122,8 +128,8 @@ public class EManager {
 
     public List<Enchantment> getCustomEnchants() {
         List<Enchantment> list = new ArrayList<>();
-        list.add(ExtraStorageAddon.EXPLOSIVE);
-        list.add(ExtraStorageAddon.SMELT);
+        list.add(extraStorageAddon.EXPLOSIVE);
+        list.add(extraStorageAddon.SMELT);
         return list;
     }
 
@@ -145,5 +151,4 @@ public class EManager {
             e.printStackTrace();
         }
     }
-
 }
