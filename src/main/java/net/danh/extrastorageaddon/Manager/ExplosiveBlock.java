@@ -40,7 +40,7 @@ public class ExplosiveBlock {
             for (Location location : locations) {
                 for (ItemStack itemStack : location.getBlock().getDrops()) {
                     if (Files.getconfigfile().getStringList("enchants.explosive.blocks").contains(location.getBlock().getType().name())) {
-                        if (user.getStorage().canStore(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), false)) {
+                        try {
                             if (extraStorageAddon.getEManager().checkFlags(e.getPlayer(), location.getBlock())) {
                                 String fortune = Objects.requireNonNull(Files.getconfigfile().getString("enchants.fortune", "#level# * 5")).replace("#level#", String.valueOf(e.getPlayer().getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)));
                                 fortune = PlaceholderAPI.setPlaceholders(e.getPlayer(), fortune);
@@ -60,11 +60,14 @@ public class ExplosiveBlock {
                                         user.getStorage().addUnused(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), 1);
                                     } else {
                                         user.getStorage().addMaterial(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), 1);
+
                                     }
                                     location.getBlock().setType(Material.AIR);
                                     /*}*/
                                 }
                             }
+                        } catch (NullPointerException ex) {
+                            user.getStorage().addNewMaterial(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack));
                         }
                     }
                 }

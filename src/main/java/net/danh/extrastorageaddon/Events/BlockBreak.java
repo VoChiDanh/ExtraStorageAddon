@@ -43,7 +43,7 @@ public class BlockBreak implements Listener {
         if (!(w.contains(p.getWorld().getName()))) {
             if (p.getInventory().getItemInMainHand().containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
                 for (ItemStack itemStack : e.getBlock().getDrops()) {
-                    if (storageAPI.getUser(p.getUniqueId()).getStorage().canStore(extraStorageAddon.getEManager().getItem(p, itemStack), false)) {
+                    try {
                         String fortune = Objects.requireNonNull(Files.getconfigfile().getString("enchants.fortune", "#level# * 5")).replace("#level#", String.valueOf(e.getPlayer().getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)));
                         fortune = PlaceholderAPI.setPlaceholders(p, fortune);
                         int amount = (int) Double.parseDouble(Calculator.calculator(fortune, 0));
@@ -51,9 +51,11 @@ public class BlockBreak implements Listener {
                         if (storageAPI.getUser(p.getUniqueId()).getStorage().isUnused(extraStorageAddon.getEManager().getItem(p, itemStack))) {
                             storageAPI.getUser(p.getUniqueId()).getStorage().addUnused(extraStorageAddon.getEManager().getItem(p, itemStack), amount);
                         } else {
-                            storageAPI.getUser(p.getUniqueId()).getStorage().addMaterial(extraStorageAddon.getEManager().getItem(p, itemStack), amount);
+                                storageAPI.getUser(p.getUniqueId()).getStorage().addMaterial(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), amount);
                         }
                         /*}*/
+                    } catch (NullPointerException ex) {
+                        storageAPI.getUser(p.getUniqueId()).getStorage().addNewMaterial(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack));
                     }
                 }
             }
