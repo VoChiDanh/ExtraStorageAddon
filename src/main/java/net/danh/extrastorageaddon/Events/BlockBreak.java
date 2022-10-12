@@ -51,7 +51,7 @@ public class BlockBreak implements Listener {
                         if (storageAPI.getUser(p.getUniqueId()).getStorage().isUnused(extraStorageAddon.getEManager().getItem(p, itemStack))) {
                             storageAPI.getUser(p.getUniqueId()).getStorage().addUnused(extraStorageAddon.getEManager().getItem(p, itemStack), amount);
                         } else {
-                                storageAPI.getUser(p.getUniqueId()).getStorage().addMaterial(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), amount);
+                            storageAPI.getUser(p.getUniqueId()).getStorage().addMaterial(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), amount);
                         }
                         /*}*/
                     } catch (NullPointerException ex) {

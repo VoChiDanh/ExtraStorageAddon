@@ -151,4 +151,8 @@ public class EManager {
             e.printStackTrace();
         }
     }
+
+    public boolean checkBlock(Material m) {
+        return Files.getconfigfile().getStringList("enchants.explosive.blocks").contains(m.name());
+    }
 }

@@ -40,6 +40,9 @@ public class ExplosiveBlock {
             for (Location location : locations) {
                 for (ItemStack itemStack : location.getBlock().getDrops()) {
                     if (Files.getconfigfile().getStringList("enchants.explosive.blocks").contains(location.getBlock().getType().name())) {
+                        if (!ExtraStorageAddon.getInstance().getEManager().checkBlock(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack).getType())) {
+                            return;
+                        }
                         try {
                             if (extraStorageAddon.getEManager().checkFlags(e.getPlayer(), location.getBlock())) {
                                 String fortune = Objects.requireNonNull(Files.getconfigfile().getString("enchants.fortune", "#level# * 5")).replace("#level#", String.valueOf(e.getPlayer().getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)));
