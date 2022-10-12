@@ -16,11 +16,11 @@ import java.util.logging.Level;
 
 public final class ExtraStorageAddon extends JavaPlugin implements Listener {
 
-    public final Enchantment EXPLOSIVE = new EnchantWrapper("explosive", "Explosive", 100, EnchantmentTarget.TOOL);
-    public final Enchantment SMELT = new EnchantWrapper("smelt", "Smelt", 100, EnchantmentTarget.TOOL);
     private static ExtraStorageAddon instance;
+    public final Enchantment EXPLOSIVE = new EnchantWrapper(200, "Explosive", 100, EnchantmentTarget.TOOL);
+    public final Enchantment SMELT = new EnchantWrapper(201, "Smelt", 100, EnchantmentTarget.TOOL);
+    private final EManager eManager = new EManager(this);
     private final StorageAPI storageAPI = StorageAPI.getInstance();
-    private final EManager eManager = new EManager(this, storageAPI);
 
     public static ExtraStorageAddon getInstance() {
         return instance;

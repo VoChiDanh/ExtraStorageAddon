@@ -15,14 +15,14 @@ public class EnchantWrapper extends EnchantmentWrapper {
     private final EnchantmentTarget target;
     private List<Enchantment> conflict;
 
-    public EnchantWrapper(String nameSpace, String name, int maxLevel, EnchantmentTarget target) {
+    public EnchantWrapper(int nameSpace, String name, int maxLevel, EnchantmentTarget target) {
         super(nameSpace);
         this.name = name;
         this.maxLevel = maxLevel;
         this.target = target;
     }
 
-    public EnchantWrapper(String nameSpace, String name, int maxLevel, EnchantmentTarget target, List<Enchantment> conflict) {
+    public EnchantWrapper(int nameSpace, String name, int maxLevel, EnchantmentTarget target, List<Enchantment> conflict) {
         this(nameSpace, name, maxLevel, target);
         this.conflict = new ArrayList<>(conflict);
     }
