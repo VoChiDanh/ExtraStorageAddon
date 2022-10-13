@@ -1,7 +1,6 @@
 package net.danh.extrastorageaddon;
 
 import com.hyronic.exstorage.api.StorageAPI;
-import com.hyronic.exstorage.data.user.Storage;
 import net.danh.extrastorageaddon.CMD.CMD;
 import net.danh.extrastorageaddon.Enchants.EnchantWrapper;
 import net.danh.extrastorageaddon.Events.BlockBreak;
@@ -20,8 +19,8 @@ public final class ExtraStorageAddon extends JavaPlugin implements Listener {
     public final Enchantment EXPLOSIVE = new EnchantWrapper("explosive", "Explosive", 100, EnchantmentTarget.TOOL);
     public final Enchantment SMELT = new EnchantWrapper("smelt", "Smelt", 100, EnchantmentTarget.TOOL);
     private static ExtraStorageAddon instance;
-    private final EManager eManager = new EManager(this);
     private final StorageAPI storageAPI = StorageAPI.getInstance();
+    private final EManager eManager = new EManager(this, storageAPI);
 
     public static ExtraStorageAddon getInstance() {
         return instance;
