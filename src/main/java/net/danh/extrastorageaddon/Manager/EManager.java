@@ -1,5 +1,6 @@
 package net.danh.extrastorageaddon.Manager;
 
+import com.hyronic.exstorage.api.StorageAPI;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.bukkit.RegionContainer;
 import com.sk89q.worldguard.bukkit.RegionQuery;
@@ -154,5 +155,14 @@ public class EManager {
 
     public boolean checkBlock(Material m) {
         return Files.getconfigfile().getStringList("enchants.explosive.blocks").contains(m.name());
+    }
+
+    public boolean checkSpace(Player p, int amount) {
+        long space = StorageAPI.getInstance().getUser(p.getUniqueId()).getStorage().getFreeSpace();
+        if (space > 0) {
+            return space - (long) amount > 0L;
+        } else {
+            return p.hasPermission("exstorage.storage.unlimited");
+        }
     }
 }

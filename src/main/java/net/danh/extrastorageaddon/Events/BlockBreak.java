@@ -48,13 +48,13 @@ public class BlockBreak implements Listener {
                             String fortune = Objects.requireNonNull(Files.getconfigfile().getString("enchants.fortune", "#level# * 5")).replace("#level#", String.valueOf(e.getPlayer().getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)));
                             fortune = PlaceholderAPI.setPlaceholders(p, fortune);
                             int amount = (int) Double.parseDouble(Calculator.calculator(fortune, 0));
-                            /*     if (storageAPI.getUser(p.getUniqueId()).getStorage().getFreeSpace() - (long) (storageAPI.getUser(p.getUniqueId()).getStorage().getMaterial(itemStack) + amount) >= 0) {*/
-                            if (storageAPI.getUser(p.getUniqueId()).getStorage().isUnused(extraStorageAddon.getEManager().getItem(p, itemStack))) {
-                                storageAPI.getUser(p.getUniqueId()).getStorage().addUnused(extraStorageAddon.getEManager().getItem(p, itemStack), amount);
-                            } else {
-                                storageAPI.getUser(p.getUniqueId()).getStorage().addMaterial(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), amount);
+                            if (extraStorageAddon.getEManager().checkSpace(e.getPlayer(), amount)) {
+                                if (storageAPI.getUser(p.getUniqueId()).getStorage().isUnused(extraStorageAddon.getEManager().getItem(p, itemStack))) {
+                                    storageAPI.getUser(p.getUniqueId()).getStorage().addUnused(extraStorageAddon.getEManager().getItem(p, itemStack), amount);
+                                } else {
+                                    storageAPI.getUser(p.getUniqueId()).getStorage().addMaterial(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), amount);
+                                }
                             }
-                            /*}*/
                         } catch (NullPointerException ex) {
                             storageAPI.getUser(p.getUniqueId()).getStorage().addNewMaterial(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack));
                         }

@@ -2,15 +2,19 @@ package net.danh.extrastorageaddon.Manager;
 
 import com.hyronic.exstorage.api.StorageAPI;
 import com.hyronic.exstorage.data.user.User;
+import me.clip.placeholderapi.PlaceholderAPI;
+import net.danh.dcore.Calculator.Calculator;
 import net.danh.extrastorageaddon.ExtraStorageAddon;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ExplosiveBlock {
 
@@ -37,10 +41,21 @@ public class ExplosiveBlock {
                 for (ItemStack itemStack : location.getBlock().getDrops()) {
                     if (Files.getconfigfile().getStringList("enchants.explosive.blocks").contains(location.getBlock().getType().name())) {
                         if (ExtraStorageAddon.getInstance().getEManager().checkBlock(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack).getType())) {
+
                             try {
                                 if (extraStorageAddon.getEManager().checkFlags(e.getPlayer(), location.getBlock())) {
-                                    if (extraStorageAddon.getEManager().applyFortune(e.getPlayer(), itemStack)) {
-                                        location.getBlock().setType(Material.AIR);
+                                    String fortune = Objects.requireNonNull(Files.getconfigfile().getString("enchants.fortune", "#level# * 5")).replace("#level#", String.valueOf(e.getPlayer().getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)));
+                                    fortune = PlaceholderAPI.setPlaceholders(e.getPlayer(), fortune);
+                                    if (e.getPlayer().getInventory().getItemInMainHand().containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
+                                        int amount = (int) Double.parseDouble(Calculator.calculator(fortune, 0));
+                                        if (extraStorageAddon.getEManager().checkSpace(e.getPlayer(), amount)) {
+                                            if (user.getStorage().isUnused(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack))) {
+                                                user.getStorage().addUnused(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), amount);
+                                            } else {
+                                                user.getStorage().addMaterial(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack), amount);
+                                            }
+                                            location.getBlock().setType(Material.AIR);
+                                        }
                                     } else {
                                         if (extraStorageAddon.getEManager().checkSpace(e.getPlayer(), 1)) {
                                             if (user.getStorage().isUnused(extraStorageAddon.getEManager().getItem(e.getPlayer(), itemStack))) {
