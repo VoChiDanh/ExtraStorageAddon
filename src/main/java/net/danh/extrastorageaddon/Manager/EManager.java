@@ -2,15 +2,15 @@ package net.danh.extrastorageaddon.Manager;
 
 import com.hyronic.exstorage.api.StorageAPI;
 import com.sk89q.worldguard.LocalPlayer;
-import com.sk89q.worldguard.bukkit.RegionContainer;
-import com.sk89q.worldguard.bukkit.RegionQuery;
+import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import com.sk89q.worldguard.protection.flags.DefaultFlag;
+import com.sk89q.worldguard.protection.flags.Flags;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
+import com.sk89q.worldguard.protection.regions.RegionQuery;
 import net.danh.dcore.Utils.Chat;
 import net.danh.extrastorageaddon.ExtraStorageAddon;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -109,10 +109,10 @@ public class EManager {
 
     public boolean checkFlags(Player p, Block block) {
         LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(p);
-        Location loc = new Location(p.getWorld(), block.getLocation().getBlockX(), block.getLocation().getBlockY(), block.getLocation().getBlockZ());
-        RegionContainer container = WorldGuardPlugin.inst().getRegionContainer();
+        com.sk89q.worldedit.util.Location loc = new com.sk89q.worldedit.util.Location(localPlayer.getWorld(), block.getLocation().getBlockX(), block.getLocation().getBlockY(), block.getLocation().getBlockZ());
+        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
         RegionQuery query = container.createQuery();
-        return query.testState(loc, localPlayer, DefaultFlag.BLOCK_BREAK) && p.getGameMode().equals(GameMode.SURVIVAL);
+        return query.testState(loc, localPlayer, Flags.BLOCK_BREAK) && p.getGameMode().equals(GameMode.SURVIVAL);
     }
 
     public ItemStack getItem(Player p, ItemStack item) {
