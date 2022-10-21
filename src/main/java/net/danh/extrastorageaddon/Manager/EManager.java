@@ -1,5 +1,6 @@
 package net.danh.extrastorageaddon.Manager;
 
+import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
 import com.hyronic.exstorage.api.StorageAPI;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.WorldGuard;
@@ -108,11 +109,22 @@ public class EManager {
     }
 
     public boolean checkFlags(Player p, Block block) {
-        LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(p);
-        com.sk89q.worldedit.util.Location loc = new com.sk89q.worldedit.util.Location(localPlayer.getWorld(), block.getLocation().getBlockX(), block.getLocation().getBlockY(), block.getLocation().getBlockZ());
-        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
-        RegionQuery query = container.createQuery();
-        return query.testState(loc, localPlayer, Flags.BLOCK_BREAK) && p.getGameMode().equals(GameMode.SURVIVAL);
+        if (extraStorageAddon.isWG()) {
+            LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(p);
+            com.sk89q.worldedit.util.Location loc = new com.sk89q.worldedit.util.Location(localPlayer.getWorld(), block.getLocation().getBlockX(), block.getLocation().getBlockY(), block.getLocation().getBlockZ());
+            RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+            RegionQuery query = container.createQuery();
+            if (extraStorageAddon.isSS2()) {
+                if (SuperiorSkyblockAPI.getPlayer(p).isInsideIsland()) {
+                    return true;
+                } else {
+                    return query.testState(loc, localPlayer, Flags.BLOCK_BREAK) && p.getGameMode().equals(GameMode.SURVIVAL);
+                }
+            } else {
+                return query.testState(loc, localPlayer, Flags.BLOCK_BREAK) && p.getGameMode().equals(GameMode.SURVIVAL);
+            }
+        }
+        return true;
     }
 
     public ItemStack getItem(Player p, ItemStack item) {
@@ -162,7 +174,7 @@ public class EManager {
         if (space > 0) {
             return space - (long) amount > 0L;
         } else {
-            return p.hasPermission("exstorage.storage.unlimited");
+            return true;
         }
     }
 }

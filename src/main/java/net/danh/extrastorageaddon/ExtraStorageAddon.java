@@ -21,6 +21,8 @@ public final class ExtraStorageAddon extends JavaPlugin implements Listener {
     public final Enchantment SMELT = new EnchantWrapper("smelt", "Smelt", 100, EnchantmentTarget.TOOL);
     private final EManager eManager = new EManager(this);
     private final StorageAPI storageAPI = StorageAPI.getInstance();
+    private boolean WG = false;
+    private boolean SS2 = false;
 
     public static ExtraStorageAddon getInstance() {
         return instance;
@@ -34,6 +36,8 @@ public final class ExtraStorageAddon extends JavaPlugin implements Listener {
     public void onEnable() {
         instance = this;
         if (getServer().getPluginManager().getPlugin("ExtraStorage") != null) {
+            WG = getServer().getPluginManager().getPlugin("WorldGuard") != null;
+            SS2 = getServer().getPluginManager().getPlugin("SuperiorSkyblock2") != null;
             getServer().getPluginManager().registerEvents(new BlockBreak(this, storageAPI), this);
             getLogger().log(Level.INFO, "Successfully hooked with ExtraStorage v" + Objects.requireNonNull(getServer().getPluginManager().getPlugin("ExtraStorage")).getDescription().getVersion());
             eManager.register();
@@ -50,4 +54,11 @@ public final class ExtraStorageAddon extends JavaPlugin implements Listener {
     }
 
 
+    public boolean isWG() {
+        return WG;
+    }
+
+    public boolean isSS2() {
+        return SS2;
+    }
 }
