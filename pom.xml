@@ -103,7 +103,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.13.2-R0.1-SNAPSHOT</version>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -113,8 +113,8 @@
         </dependency>
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>
-            <artifactId>worldguard-bukkit</artifactId>
-            <version>7.0.5-SNAPSHOT</version>
+            <artifactId>worldguard-legacy</artifactId>
+            <version>6.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
