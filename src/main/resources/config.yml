@@ -1,5 +1,7 @@
 disable-worlds:
   - plots2
+bypass-worlds:
+  - Super2world
 enchants:
   fortune: "#level# * 5"
   smelt:

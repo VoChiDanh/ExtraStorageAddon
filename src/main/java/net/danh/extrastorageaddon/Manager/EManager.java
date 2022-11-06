@@ -1,6 +1,5 @@
 package net.danh.extrastorageaddon.Manager;
 
-import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
 import com.hyronic.exstorage.api.StorageAPI;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.WorldGuard;
@@ -11,8 +10,10 @@ import com.sk89q.worldguard.protection.regions.RegionQuery;
 import net.danh.dcore.Utils.Chat;
 import net.danh.extrastorageaddon.ExtraStorageAddon;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -109,22 +110,27 @@ public class EManager {
     }
 
     public boolean checkFlags(Player p, Block block) {
-        if (extraStorageAddon.isWG()) {
-            LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(p);
-            com.sk89q.worldedit.util.Location loc = new com.sk89q.worldedit.util.Location(localPlayer.getWorld(), block.getLocation().getBlockX(), block.getLocation().getBlockY(), block.getLocation().getBlockZ());
-            RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
-            RegionQuery query = container.createQuery();
-            if (extraStorageAddon.isSS2()) {
-                if (SuperiorSkyblockAPI.getPlayer(p).isInsideIsland()) {
-                    return true;
-                } else {
-                    return query.testState(loc, localPlayer, Flags.BLOCK_BREAK) && p.getGameMode().equals(GameMode.SURVIVAL);
+        List<String> worldname = Files.getconfigfile().getStringList("bypass-worlds");
+        if (!Files.getconfigfile().contains("bypass-worlds") || worldname.isEmpty()) {
+            return wg(p, block);
+        }
+        if (Files.getconfigfile().contains("bypass-worlds") && !worldname.isEmpty()) {
+            for (String w_n : worldname) {
+                World world = Bukkit.getWorld(w_n);
+                if (world != null) {
+                    return Objects.equals(block.getLocation().getWorld(), world);
                 }
-            } else {
-                return query.testState(loc, localPlayer, Flags.BLOCK_BREAK) && p.getGameMode().equals(GameMode.SURVIVAL);
             }
         }
-        return true;
+        return false;
+    }
+
+    private boolean wg(Player p, Block block) {
+        LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(p);
+        com.sk89q.worldedit.util.Location loc = new com.sk89q.worldedit.util.Location(localPlayer.getWorld(), block.getLocation().getBlockX(), block.getLocation().getBlockY(), block.getLocation().getBlockZ());
+        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+        RegionQuery query = container.createQuery();
+        return query.testState(loc, localPlayer, Flags.BLOCK_BREAK) && p.getGameMode().equals(GameMode.SURVIVAL);
     }
 
     public ItemStack getItem(Player p, ItemStack item) {
